@@ -7,8 +7,6 @@ public class RelatorioAlugueis implements Relatorio {
         this.listaAlugueis = listaAlugueis;
     }
 
-    // Implementação da interface Relatorio
-
     @Override
     public void gerarRelatorio() {
         for (Aluguel aluguel : listaAlugueis) {

@@ -13,7 +13,6 @@ public class Funcionario {
         this.salario = salario;
     }
 
-    // Getters e Setters
 
     public String getNome() {
         return nome;

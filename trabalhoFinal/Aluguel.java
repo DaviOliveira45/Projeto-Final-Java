@@ -11,8 +11,6 @@ class Aluguel {
         this.valorTotal = calcularValorAluguel();
     }
 
-    // Getters e Setters
-
     public Carro getCarroAlugado() {
         return carroAlugado;
     }
@@ -42,8 +40,6 @@ class Aluguel {
     public double getValorTotal() {
         return valorTotal;
     }
-
-    // Funções adicionais
 
     public double calcularValorAluguel() {
         return carroAlugado.calcularCustoAluguel(diasAlugados);

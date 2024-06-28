@@ -5,7 +5,6 @@ public class DescontoClienteVIP implements Desconto {
         this.percentual = percentual;
     }
 
-    // Implementação da interface Desconto
 
     @Override
     public void aplicarDesconto() {

@@ -7,8 +7,6 @@ public class LocacaoCarro implements Locacao {
         this.diasAlugados = diasAlugados;
     }
 
-    // Implementação da interface Locacao
-
     @Override
     public double calcularValorAluguel() {
         return carroAlugado.calcularCustoAluguel(diasAlugados);

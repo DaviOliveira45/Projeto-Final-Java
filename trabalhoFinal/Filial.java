@@ -11,7 +11,6 @@ public class Filial {
         this.carrosDisponiveis = new ArrayList<>();
     }
 
-    // Getters e Setters
 
     public String getEndereco() {
         return endereco;
@@ -32,8 +31,6 @@ public class Filial {
     public ArrayList<Carro> getCarrosDisponiveis() {
         return carrosDisponiveis;
     }
-
-    // Funções adicionais
 
     public void adicionarCarro(Carro carro) {
         carrosDisponiveis.add(carro);

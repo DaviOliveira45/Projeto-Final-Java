@@ -8,7 +8,6 @@ class ClienteVIP extends Cliente {
         this.descontosAdicionais = 0.0;
     }
 
-    // Getters e Setters
 
     public boolean isStatusFidelidade() {
         return statusFidelidade;
@@ -26,10 +25,9 @@ class ClienteVIP extends Cliente {
         this.descontosAdicionais = descontosAdicionais;
     }
 
-    // Funções adicionais
 
     public void aplicarDescontosEspeciais() {
-        descontosAdicionais = 0.15; // Exemplo: 15% de desconto adicional
+        descontosAdicionais = 0.15; 
     }
 
     public void gerenciarBeneficios() {

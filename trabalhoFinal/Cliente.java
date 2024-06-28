@@ -15,8 +15,6 @@ class Cliente {
         this.historicoAlugueis = new ArrayList<>();
     }
 
-    // Getters e Setters
-
     public String getNome() {
         return nome;
     }
@@ -53,7 +51,6 @@ class Cliente {
         return historicoAlugueis;
     }
 
-    // Funções adicionais
 
     public void adicionarAluguel(Aluguel aluguel) {
         historicoAlugueis.add(aluguel);

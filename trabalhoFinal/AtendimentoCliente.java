@@ -9,8 +9,6 @@ public class AtendimentoCliente {
         this.detalhes = detalhes;
     }
 
-    // Getters e Setters
-
     public String getNomeAtendente() {
         return nomeAtendente;
     }
@@ -35,7 +33,6 @@ public class AtendimentoCliente {
         this.detalhes = detalhes;
     }
 
-    // Funções adicionais
 
     public void registrarAtendimento() {
         System.out.println("Atendimento registrado.");

@@ -7,11 +7,12 @@ public class Main {
     private static ArrayList<Cliente> clientes = new ArrayList<>();
     private static ArrayList<Carro> carros = new ArrayList<>();
     private static ArrayList<Aluguel> alugueis = new ArrayList<>();
+    private static ArrayList<Manutencao> manutencoes = new ArrayList<>();
+    private static ArrayList<Seguro> seguros = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Criando algumas instâncias para teste
         inicializarDados();
 
         int opcao;
@@ -19,7 +20,7 @@ public class Main {
             exibirMenu();
             System.out.print("Digite a opção desejada: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpar o buffer do scanner
+            scanner.nextLine(); 
 
             switch (opcao) {
                 case 1:
@@ -43,6 +44,24 @@ public class Main {
                 case 7:
                     listarFiliais();
                     break;
+                case 8:
+                    adicionarManutencao(scanner);
+                    break;
+                case 9:
+                    adicionarSeguro(scanner);
+                    break;
+                case 10:
+                    deletarAluguel(scanner);
+                    break;
+                case 11:
+                    deletarCarro(scanner);
+                    break;
+                case 12:
+                    listarManutencoes();
+                    break;
+                case 13:
+                    listarSeguros();
+                    break;
                 case 0:
                     System.out.println("Saindo do programa...");
                     break;
@@ -64,6 +83,12 @@ public class Main {
         System.out.println("5. Exibir Relatório de Aluguéis");
         System.out.println("6. Adicionar Filial");
         System.out.println("7. Listar Filiais");
+        System.out.println("8. Adicionar Manutenção");
+        System.out.println("9. Adicionar Seguro");
+        System.out.println("10. Deletar Aluguel");
+        System.out.println("11. Deletar Carro");
+        System.out.println("12. Listar Manutenções");
+        System.out.println("13. Listar Seguros");
         System.out.println("0. Sair do Programa");
         System.out.println("####################################");
     }
@@ -100,15 +125,15 @@ public class Main {
 
         System.out.print("Ano: ");
         int ano = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer do scanner
+        scanner.nextLine(); 
 
         System.out.print("Quilometragem: ");
         double quilometragem = scanner.nextDouble();
-        scanner.nextLine(); // Limpar o buffer do scanner
+        scanner.nextLine(); 
 
         System.out.print("Custo Diário de Aluguel: ");
         double custoDiario = scanner.nextDouble();
-        scanner.nextLine(); // Limpar o buffer do scanner
+        scanner.nextLine(); 
 
         Carro carro = new Carro(modelo, placa, ano, quilometragem, custoDiario);
         carros.add(carro);
@@ -144,19 +169,18 @@ public class Main {
 
         Carro carro = buscarCarroPorModelo(modeloCarro);
         if (carro == null || !carro.isDisponivel()) {
-            System.out.println("Carro não disponível para aluguel.");
+            System.out.println("Carro não disponível.");
             return;
         }
 
-        System.out.print("Quantos dias deseja alugar? ");
+        System.out.print("Número de dias de aluguel: ");
         int dias = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer do scanner
+        scanner.nextLine(); 
 
         Aluguel aluguel = new Aluguel(carro, cliente, dias);
         alugueis.add(aluguel);
-
-        cliente.adicionarAluguel(aluguel);
         carro.setDisponibilidade(false);
+        cliente.adicionarAluguel(aluguel);
 
         System.out.println("Aluguel realizado com sucesso!");
     }
@@ -165,8 +189,8 @@ public class Main {
         System.out.println("\n### Relatório de Aluguéis ###");
         for (Aluguel aluguel : alugueis) {
             System.out.println("Cliente: " + aluguel.getCliente().getNome() +
-                               ", Carro: " + aluguel.getCarroAlugado().getModelo() +
-                               ", Valor Total: " + aluguel.getValorTotal());
+                    " - Carro: " + aluguel.getCarroAlugado().getModelo() +
+                    " - Dias: " + aluguel.getDiasAlugados());
         }
     }
 
@@ -186,9 +210,151 @@ public class Main {
     }
 
     private static void listarFiliais() {
-        System.out.println("\n### Filiais Cadastradas ###");
+        System.out.println("\n### Filiais ###");
         for (Filial filial : filiais) {
             System.out.println("Endereço: " + filial.getEndereco() + " - Gerente: " + filial.getGerente());
+        }
+    }
+
+    private static void adicionarManutencao(Scanner scanner) {
+        System.out.println("\n### Adicionar Manutenção ###");
+
+        listarCarrosDisponiveis();
+
+        System.out.print("Modelo do Carro: ");
+        String modeloCarro = scanner.nextLine();
+
+        Carro carro = buscarCarroPorModelo(modeloCarro);
+        if (carro == null) {
+            System.out.println("Carro não encontrado.");
+            return;
+        }
+
+        System.out.print("Descrição da Manutenção: ");
+        String descricao = scanner.nextLine();
+
+        System.out.print("Custo da Manutenção: ");
+        double custo = scanner.nextDouble();
+        scanner.nextLine(); 
+
+        Manutencao manutencao = new ManutencaoBasica(carro, descricao, custo);
+        manutencoes.add(manutencao);
+        carro.adicionarManutencao(manutencao);
+
+        System.out.println("Manutenção adicionada com sucesso!");
+    }
+
+    private static void adicionarSeguro(Scanner scanner) {
+        System.out.println("\n### Adicionar Seguro ###");
+
+        listarCarrosDisponiveis();
+
+        System.out.print("Modelo do Carro: ");
+        String modeloCarro = scanner.nextLine();
+
+        Carro carro = buscarCarroPorModelo(modeloCarro);
+        if (carro == null) {
+            System.out.println("Carro não encontrado.");
+            return;
+        }
+
+        System.out.print("Tipo de Seguro: ");
+        String tipo = scanner.nextLine();
+
+        System.out.print("Cobertura do Seguro: ");
+        String cobertura = scanner.nextLine();
+
+        System.out.print("Telefone de Contato do Seguro: ");
+        String telefoneContato = scanner.nextLine();
+
+        Seguro seguro = new SeguroCarro(carro, tipo, cobertura, telefoneContato);
+        seguros.add(seguro);
+        carro.adicionarSeguro(seguro);
+
+        System.out.println("Seguro adicionado com sucesso!");
+    }
+
+    private static void deletarAluguel(Scanner scanner) {
+        System.out.println("\n### Deletar Aluguel ###");
+
+        System.out.print("CPF do Cliente: ");
+        String cpf = scanner.nextLine();
+
+        Cliente cliente = buscarClientePorCPF(cpf);
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado.");
+            return;
+        }
+
+        System.out.print("Modelo do Carro: ");
+        String modeloCarro = scanner.nextLine();
+
+        Aluguel aluguelParaRemover = null;
+        for (Aluguel aluguel : alugueis) {
+            if (aluguel.getCliente().equals(cliente) && aluguel.getCarroAlugado().getModelo().equalsIgnoreCase(modeloCarro)) {
+                aluguelParaRemover = aluguel;
+                break;
+            }
+        }
+
+        if (aluguelParaRemover != null) {
+            alugueis.remove(aluguelParaRemover);
+            aluguelParaRemover.getCarroAlugado().setDisponibilidade(true);
+            cliente.getHistoricoAlugueis().remove(aluguelParaRemover);
+            System.out.println("Aluguel removido com sucesso!");
+        } else {
+            System.out.println("Aluguel não encontrado.");
+        }
+    }
+
+    private static void deletarCarro(Scanner scanner) {
+        System.out.println("\n### Deletar Carro ###");
+    
+        System.out.print("Placa do Carro: ");
+        String placa = scanner.nextLine();
+    
+        Carro carroParaRemover = buscarCarroPorPlaca(placa);
+        if (carroParaRemover != null) {
+            carros.remove(carroParaRemover);
+    
+            Seguro seguroParaRemover = buscarSeguroPorCarro(carroParaRemover);
+            if (seguroParaRemover != null) {
+                seguros.remove(seguroParaRemover);
+            }
+    
+            System.out.println("Carro removido com sucesso!");
+        } else {
+            System.out.println("Carro não encontrado.");
+        }
+    }
+    
+    private static Seguro buscarSeguroPorCarro(Carro carro) {
+        for (Seguro seguro : seguros) {
+            if (seguro instanceof SeguroCarro) {
+                Carro carroSeguro = ((SeguroCarro) seguro).getCarro();
+                if (carroSeguro.equals(carro)) {
+                    return seguro;
+                }
+            }
+        }
+        return null;
+    }
+    
+
+    private static void listarManutencoes() {
+        System.out.println("\n### Manutenções Cadastradas ###");
+        for (Manutencao manutencao : manutencoes) {
+            System.out.println(manutencao.obterDetalhesManutencao());
+        }
+    }
+
+    private static void listarSeguros() {
+        System.out.println("\n### Seguros Cadastrados ###");
+        for (Seguro seguro : seguros) {
+            System.out.println("Carro: " + ((SeguroCarro) seguro).getCarro().getModelo());
+            System.out.println("Tipo: " + seguro.obterTipoSeguro());
+            System.out.println("Cobertura: " + ((SeguroCarro) seguro).getCobertura());
+            System.out.println("Telefone de Contato: " + ((SeguroCarro) seguro).getTelefoneContato());
         }
     }
 
@@ -210,8 +376,16 @@ public class Main {
         return null;
     }
 
+    private static Carro buscarCarroPorPlaca(String placa) {
+        for (Carro carro : carros) {
+            if (carro.getPlaca().equalsIgnoreCase(placa)) {
+                return carro;
+            }
+        }
+        return null;
+    }
+
     private static void inicializarDados() {
-        // Inicializando dados fictícios para testes
         Cliente cliente1 = new Cliente("João Silva", "123.456.789-00", "(11) 9999-8888", "joao@email.com");
         Cliente cliente2 = new Cliente("Maria Souza", "987.654.321-00", "(11) 7777-6666", "maria@email.com");
         clientes.add(cliente1);

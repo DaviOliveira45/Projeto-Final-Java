@@ -9,7 +9,6 @@ public class Assistencia implements AssistenciaVeicular {
         this.telefoneContato = telefoneContato;
     }
 
-    // Getters e Setters
 
     public String getTipo() {
         return tipo;
@@ -34,8 +33,6 @@ public class Assistencia implements AssistenciaVeicular {
     public void setTelefoneContato(String telefoneContato) {
         this.telefoneContato = telefoneContato;
     }
-
-    // Implementação da interface AssistenciaVeicular
 
     @Override
     public void acionarAssistencia() {

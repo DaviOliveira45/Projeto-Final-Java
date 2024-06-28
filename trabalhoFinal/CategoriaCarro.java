@@ -7,9 +7,7 @@ public class CategoriaCarro extends Carro {
         this.nome = nome;
         this.tipoSeguro = tipoSeguro;
     }
-
-    // Getters e Setters
-
+    
     public String getNome() {
         return nome;
     }
